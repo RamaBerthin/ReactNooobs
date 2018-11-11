@@ -2,7 +2,8 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import uuidv1 from "uuid";
-import { addArticle } from "../actions/index";
+import { addArticle } from "../actions/action";
+import { MessageComponent } from "./MessageComponent";
 
 const mapDispatchToProps = dispatch => {
   return {
@@ -23,7 +24,7 @@ class ConnectedForm extends Component {
   }
 
   handleChange(event) {
-    this.setState({ [event.target.id]: event.target.value });
+    this.setState({ [ event.target.id ]: event.target.value });
   }
 
   handleSubmit(event) {
@@ -36,6 +37,7 @@ class ConnectedForm extends Component {
 
   render() {
     const { title } = this.state;
+    const hasErrorMessage  = {title}.title === "";
     return (
       <form onSubmit={this.handleSubmit}>
         <div className="form-group">
@@ -51,6 +53,7 @@ class ConnectedForm extends Component {
         <button type="submit" className="btn btn-success btn-lg">
           SAVE
         </button>
+        <MessageComponent isDisplay={hasErrorMessage} />
       </form>
     );
   }
