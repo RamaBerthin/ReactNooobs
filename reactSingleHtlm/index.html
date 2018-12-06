@@ -1,28 +1,37 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="UTF-8" />
-    <title>Hello World</title>
-    <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
-    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
-    
-    <!-- Don't use this in production: -->
-    <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="text/babel">
 
-      const name = 'Josh Berthin';
-      const element = <h1> Hello, {name} </h1>
+<head>
+  <meta charset="UTF-8" />
+  <title>Hello World</title>
+  <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
 
+  <!-- Don't use this in production: -->
+  <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+</head>
+
+<body>
+  <div id="root"></div>
+  <script type="text/babel">
+
+    function tick(){
+      const element = (
+            <div>
+              <h1>Hello, world</h1>
+              <h2>It is {new Date().toLocaleTimeString()}</h2>
+            </div>
+      );
       ReactDOM.render(
-        element,
+        element, 
         document.getElementById('root')
       );
+    }
 
+    setInterval(tick, 1000);
+     
     </script>
-    <!--
+  <!--
       https://reactjs.org/docs/getting-started.html
       
       Note: this page is a great way to try React but it's not suitable for production.
@@ -37,5 +46,6 @@
       You can also use React without JSX, in which case you can remove Babel:
       https://reactjs.org/docs/react-without-jsx.html
     -->
-  </body>
+</body>
+
 </html>
