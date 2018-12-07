@@ -1,0 +1,173 @@
+* React is a Javascript library, developed in 2013 by Jordan Walke of Facebook.
+* Redux is framework agnostic. Learn it once, use it everywhere (Vue JS, Angular)
+
+* So what are the alternatives for managing the state of a React component?
+Redux is one of them.
+State is so pervasive and hard that state management in JS is still an unsolved problem.
+
+Redux helps giving each React component the exact piece of state it needs.
+Redux holds up the state within a single location.
+Also with Redux the logic for fetching and managing the state lives outside React.
+
+* In a React component the state holds up data and the component might render such data to the user.
+The state could also change in response to actions and events: in React you can update the local component’s state with setState.
+
+* state.authentificationReducer
+lorsque cette propriété(authentificationReducer) d’état change, mon composant prop est également modifié.
+
+* Avec Redux, on distingue 2 catégories de composants : les composants de présentation et les composants conteneurs. 
+
+		| Presentational Components		| Container Components
+--------------------------------------------------------| --------------------------------------
+Objectif	| Aspect extérieur(markup, styles)	| Fonctionnement (récupération de
+		| de l'appli				| données, mise à jour de l'état) de l'appli
+----------------| --------------------------------------|----------------------------------------
+Utilise		| Non					| Oui
+Redux
+----------------| --------------------------------------| -----------------------------------------
+Lecture des 	| Lecture depuis les props		| Abonnement au state de Redux
+données	
+----------------| --------------------------------------| ----------------------------------------
+Pour changer 	| Appeler des callbacks depuis les	| Envoyer des actions Redux
+les données	| props
+----------------| --------------------------------------| ---------------------------------------
+Est écrit	| A la main				| Souvent généré par React Redux
+----------------| ----------------------------------------| ---------------------------------------
+
+* Les actions
+une action au sens Redux:
+  Actions -> Reducers	-> Store
+	<-	View	<-
+Les actions envoient les données de l’application vers un store. Ce sont les seules sources d’information pour 
+un store. Elles sont définies comme un objet Javascript qui a une propriété ‘type’ pour indiquer le type d’action réalisé
+Les actions sont envoyées aux Reducer par la fonction dispatch();
+
+* Les Reducers
+Le reducer est une fonction pure (sans état) qui prend en entrée le précédent state et une action pour retourner
+ en sortie le prochain state. (previousState, action) => newState
+Passing an initial state is useful for server side rendering. Anyway, the state comes from reducers.
+
+* Exression
+ connect((...)) : il connecte le state de l'application avec les props du component.
+
+* Ne pas récupérer tout le store
+Ex:
+const mapStateToProps = state => ({
+  favoritesFilm: state
+})
+ici, on a connecté tout le state de l'application à un component spécifique. C'est pas bien car par exemple pour le
+component Film, il va tout récupérer , les infos des utilisateurs, etc....
+
+Cela m'amène à une autre bonne pratique. Quand vous mappez le state de l'application à un component, vous devez 
+spécifier les informations qui vous intéressent et ne pas retourner tout le state.
+const mapStateToProps = state => ({
+  favoritesFilm: state.favoritesFilm
+})
+Ici, on n'a mappé que ce qui nous intéresse, à savoir la liste des films favoris.
+
+* Il y a deux actions qui peuvent pousser un component à se re-rendre (UI refresh):
+- un changement dans son state(avec setState())
+- un changement dans ses props
+
+* But what is the state anyway?
+Consider the following example:
+the user clicks a button, a modal appears afterwards.
+We could describe the initial state as a plain JavaScript object:
+var state = {
+  buttonClicked: 'no',
+  modalOpen: 'no'
+}
+And when the user clicks the button we have:
+    var state = {
+      buttonClicked: 'yes',
+      modalOpen: 'yes'
+    }
+
+* NavLink vs <a> tag
+NavLink devient <a href="#....."   />
+Avec <a> tag si tu n'a pas de # , il va interroger le serveur.
+
+*   
+<Route path="/applicationcst/:saConsommateur" component={GetAppContainer} />
+
+ this.state = {
+      SaConsommateur: "",
+    };
+
+dans Render()
+ <NavLink to={`/applicationcst/${this.state.SaConsommateur}`}>
+              <input type="button" className="btn--success" value="Go" />
+            </NavLink>
+Il doit y avoir un mécanisme qui permet de renseigner this.state.SaConsommateur , genre handleChanged event.
+
+Récupérer saCon dans le componennt applicationcst:
+const saConso = this.props.match.params.saConsommateur;
+
+* JSX is a preprocessor step that adds XML syntax to JavaScript. You can definitely use React without JSX but JSX makes 
+React a lot more elegant. Just like XML, JSX tags have a tag name, attributes, and children
+
+* Syntaxe JSX
+- sytaxe basique: 
+var element =  <div>Hello World</div>;
+- Le composant avec une variable
+var HelloUser = () => {
+  var user = 'Gaël';
+  return <div>Hello {user}!</div>;
+};
+Pour utiliser du JavaScript dans du JSX, il faut l’inclure entre { }.
+- Le commentaire
+ {/* Je suis un commentaire JSX */}
+- Insérer un composant React dans du JSX
+//1er composant
+var Hello = () => {
+  return <p>Hello</p>;
+};
+	
+//2ème composant
+var User = () => {
+  var user = 'Gaël';
+  return <span>{user}</span>;
+};
+//1er composant + 2ème componsant = un 3ème composant
+var HelloUser = function() {
+return (
+ <div>
+   <Hello />
+   <User />
+ </div>
+)};
+On peut voir dans ces exemples que tous les composants React commencent par des majuscules, c’est voulu car… obligatoire :-). Sans ça, React va penser qu’il s’agit d’un tag HTML standard.
+- Un composant React recevant des props
+var User = (props) => {
+ var user = props.name;
+ return <span>{user}</span>;
+};
+Il reçoit maintenant un argument props qui contient un attribut name.
+Mais comment créer en JSX un composant HelloUser et lui passer l’argument User ?
+//Rappel du composant Hello
+var Hello = () => {
+  return <span>Hello</span>;
+};
+var HelloUser = () => {
+  return (
+    <div>
+      <Hello />
+      <User name='Gaël' />
+    </div>
+  );
+}
+En faisant ça, l’objet { name : 'Gaël' } est passé en argument à la fonction qui crée le composant User.
+
+- Un composant React et ses “children”
+var Hello = function(props) {
+	return <div>Hello {props.children}</div>
+};
+On peut se dire, à juste titre avec ce que l’on vient de voir, que l’on voit le composant Hello de la façon suivante :
+
+<Hello children={/* QUELQUE CHOSE */} />
+mais en réalité, on a ça :
+<Hello>
+  <span>John</span>
+</Hello>
+On découvre donc une nouvelle façon de manipuler le JSX :
+<MonComposant> {/*DU JSX ICI*/} </MonComposant>
