@@ -1,0 +1,67 @@
+SET UP NODE.JS and GIT BEHIND PROX CNTLM
+
+1- Download cntlm
+2- Ouvrir cntlm.ini
+3- set 
+* UserName
+* Domain
+* Password
+* Proxy
+* NoProxy
+* Listen
+-> Do save
+4- Download and install Git and Node
+5- Go to C:\Users\<User_Name_Windows>
+6- Open .gitconfig file. Set http proxy and https proxy
+e.g 
+[user]
+	name = xxxxx YYYYY
+	
+        email = xxxxx.YYYYYY.exteam@oxo.fr
+[diff]
+	
+	tool = vsdiffmerge
+[difftool]
+	
+	prompt = true
+
+[difftool "vsdiffmerge"]
+	
+	cmd = xxxxxxxxxxxxxxxxxxxxxxxxx
+	keepBackup = false
+
+[merge]
+	
+	tool = vsdiffmerge
+
+[mergetool]
+	
+	prompt = true
+
+[mergetool "vsdiffmerge"]
+	
+	cmd = xxxxxxxxxxxxxxxxxxxx
+	keepBackup = false
+	trustExitCode = true
+
+[http]
+    
+	proxy = http://127.0.0.1:3128
+    sslverify = false
+
+[https]
+    
+	proxy = http://127.0.0.1:3128
+    sslverify = false
+
+[credential]
+	
+	helper = manager
+
+7- Open .npmrc file. Set proxy, https-proxy, http-proxy
+e.g: 	
+registry=http://registry.npmjs.org
+proxy=http://127.0.0.1:3128
+https-proxy=http://127.0.0.1:3128
+http-proxy=http://127.0.0.1:3128
+strict-ssl=false
