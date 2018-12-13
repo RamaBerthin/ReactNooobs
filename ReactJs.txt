@@ -189,3 +189,35 @@ The above two components are equivalent from React’s point of view.
 
 * Props are Read-Only
 Whether you declare a component as a function or a class, it must never modify its own props.
+
+* Adding Lifecycle Methods to a Class
+ it’s very important to free up resources taken by the components when they are destroyed.
+whenever the Clock component is rendered to the DOM for the first time. This is called “mounting” in React.
+whenever the DOM produced by the Clock component is removed. This is called “unmounting” in React.
+      componentDidMount(){}
+      componentWillUnmount(){}
+These methods are called “lifecycle methods”.
+The componentDidMount() method runs after the component output has been rendered to the DOM.
+
+* USING STATE CORRECTLY
+There are three things you should know about setState().
+- Do Not Modify State Directly
+// Wrong
+this.state.comment = 'Hello';
+// Correct
+this.setState({comment: 'Hello'});
+The only place where you can assign this.state is the constructor.
+- State Updates May Be Asynchronous
+React may batch multiple setState() calls into a single update for performance. Because this.props and this.state may be updated asynchronously, you should not rely on their values for calculating the next state.
+// Wrong
+this.setState({
+  counter: this.state.counter + this.props.increment,
+});
+To fix it, use a second form of setState() that accepts a function rather than an object.
+// Correct
+this.setState((state, props) => ({
+  counter: state.counter + props.increment
+}));
+- State Updates are Merged
+When you call setState(), React merges the object you provide into the current state.
+You can update them independently with separate setState() calls.
