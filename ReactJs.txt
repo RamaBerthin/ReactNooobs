@@ -280,5 +280,44 @@ class LoggingButton extends React.Component {
 }
 
 * CONDITIONAL RENDERING
-User javascript operators like if or the conditional operator.
+Use javascript operators like if or the conditional operator.
+Two ways to implement conditional rendering
+ - create two components, then create third components which take a argument props like a flag and decide which component to display.
+ function UserGreeting(props) {
+  return <h1>Welcome back!</h1>;
+ }
+
+ function GuestGreeting(props) {
+  return <h1>Please sign up.</h1>;
+ }
+
+ function Greeting(props) {
+   const isLoggedIn = props.isLoggedIn;
+   if (isLoggedIn) {
+     return <UserGreeting />;
+   }
+   return <GuestGreeting />;
+ }
+ReactDOM.render(
+  // Try changing to isLoggedIn={true}:
+  <Greeting isLoggedIn={false} />,
+  document.getElementById('root')
+);
+
+ - Using Element Variables (adapted for component using class ES6)
+You can use variables to store elements. This can help you conditionally render a part of the component while the rest of the output doesn’t change.
+    let button;
+
+    if (isLoggedIn) {
+      button = <LogoutButton onClick={this.handleLogoutClick} />;
+    } else {
+      button = <LoginButton onClick={this.handleLoginClick} />;
+    }
+
+    return (
+      <div>
+        <Greeting isLoggedIn={isLoggedIn} />
+        {button}
+      </div>
+    );
 Expression: we will create a stateful compoment, this means a component with this.state defined
