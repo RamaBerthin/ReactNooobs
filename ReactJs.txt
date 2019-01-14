@@ -403,3 +403,16 @@ If you choose not to assign an explicit key to list items then React will defaul
 We don’t recommend using indexes for keys if the order of items may change. This can negatively impact performance and may cause issues with component state. 
 
 - Extracting Components with keys
+A good rule of thumb is that elements inside the map() call need keys.
+
+- Keys must Only Be Unique Among Siblings
+If you need the same value in your component, pass it explicitly as a prop with a different name:
+const content = posts.map((post) =>
+  <Post
+    key={post.id}
+    id={post.id}
+    title={post.title} />
+);
+
+
+FORMS
