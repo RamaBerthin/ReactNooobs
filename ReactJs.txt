@@ -221,6 +221,12 @@ this.setState((state, props) => ({
 - State Updates are Merged
 When you call setState(), React merges the object you provide into the current state.
 You can update them independently with separate setState() calls.
+Eg:
+this.state = {
+      posts: [],
+      comments: []
+    };
+this.setState({comments}) leaves this.state.posts intact, but completely replaces this.state.comments
 
 * React events are named using camelCase, rather than lowercase.
 With JSX you pass a function as the event handler, rather than a string.
@@ -416,3 +422,16 @@ const content = posts.map((post) =>
 
 
 FORMS
+In react, mutable state is typically kept in the state property of component, and only updated with setState()
+An input form element whose value is controlled by React in this way is called a "controlled component"
+ - Handling Multiple Inputs
+When you need to handle multiple controlled input elements, you can add a name attribute to each element and let the handler function
+choose what to do based on the value of event.target.name.
+const target = event.target;
+    const value = target.type === 'checkbox' ? target.checked : target.value;
+    const name = target.name;
+
+    this.setState({
+      [name]: value
+    });
+Note how we used the ES6 computed property name syntax to update the state key corresponding to the given input name:
