@@ -443,6 +443,21 @@ In these situations, you might want to check out 'uncontrolled components, an al
 If you're looking for a complete solution including validation, keeping track of the visited fields, and handling form submission, 
 Formik is one of the popular choices. However, it is build on the same principles of controlled component and managing state.
 
+Props vs State in React
+In a React component, props are variables passed to it by its parent component.
+State on the other hand is still variables, but directly initialized and managed by the component.
+The state can be initialized by props
+Ex: <ChildComponent color=green />
+
+class ChildComponent extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state.colorName = props.color
+  }
+}
+Props should never be changed in a child component, so if there's something going on that alters some variable, that variable should belong to th component state.
+Props are also used to allow child components to access methods defined in the parent component.
+
 LIFTING STATE UP
 - In React, sharing state is accomplished by moving it up to the closest common ancestor of the components that need it. This is called "lifting
 state up". We will remove the local state from the TemperatureInput and move it into the Calculator instead.
@@ -454,3 +469,30 @@ We recommend using composition instead of inheritance to reuse code between comp
   	 -> use children prop to pass-children elements directly into their output.
    Sometimes you might need multiple “holes” (trous) in a component. In such cases instead of using children
 	-> use multiple props. props can contain component <SplitPane left={ <Contacts />}  right={ <Chat />} />
+
+THINKING IN REACT
+- Step 1: Break The UI into a Component Hierarchy
+The first thing you’ll want to do is to draw boxes around every component (and subcomponent). But how to you know what should be its own component?
+One such technique is the single responsiility principe, that is, a component should idealyy only do one thing.
+If it ends up growing and complexe, it should be decomposed into smaller subcomponents.
+Once the components are identified, let's arrange them into a hierarchy. Component that appear within another component should appear as a
+child in the hierarchy.
+
+- Step 2: Build a Static Version in React
+To build a static version of your app that renders your data model, build component that reuse other components and pass data using props. props are a way of passing data from 
+parent to child. Don't use state at all to build this static version. State is reserved only for interactivity, that is, data that changes over time.
+Since this is a static version of tha app, you don't need it.
+The component at the top of the hierachy will take your complete data model as a prop.
+
+- Step 3: Identify the Minimal (but complete) Representation of UI State
+Think of all of the pieces of data in our 
+example application. We have:
+    The original list of products
+    The search text the user has entered
+    The value of the checkbox
+    The filtered list of products
+Let’s go through each one and figure out which one is state. Simply ask three questions about each piece of data:
+  1.  Is it passed in from a parent via props? If so, it probably isn’t state.
+  2.  Does it remain unchanged over time? If so, it probably isn’t state.
+  3.  Can you compute it based on any other state or props in your component? If so, it isn’t state.
+The original list of products is passed in as props, so that’s not state. The search text and the checkbox seem to be state since they change over time
